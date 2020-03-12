@@ -27,7 +27,7 @@ def standard():
             print('\n' + 'Player', colours[(turn + 1) % 2], 'is in Check!')
         b1.print_status()
         print('Turn:', turn, '\n' + 'Player:', colours[(turn + 1) % 2], '\n')
-        x, y = input(), input()
+        x, y = input('From:'), input('To:')
         if b1.piece([x[0], int(x[1])]).colour != colours[(turn + 1) % 2]:
             turn -= 1
             print('\n' + 'It is not your turn!')
