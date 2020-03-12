@@ -1,2 +1,2 @@
 # chess-cmd
-Python based chess simulator on the command line
+Python based chess simulator for the command line
