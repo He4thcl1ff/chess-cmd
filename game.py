@@ -25,7 +25,7 @@ def standard():
         backup = copy.deepcopy(b1.status)
         if b1.check[0]:
             print('\n' + 'Player', colours[(turn + 1) % 2], 'is in Check!')
-        b1.print_status()
+        b1.print_status(b1.status)
         print('Turn:', turn, '\n' + 'Player:', colours[(turn + 1) % 2], '\n')
         x, y = input('From:'), input('To:')
         if b1.piece([x[0], int(x[1])]).colour != colours[(turn + 1) % 2]:
@@ -37,7 +37,6 @@ def standard():
                 print('\n' + 'Not able to move on that field!')
             else:
                 b1.move([x[0], int(x[1])], [y[0], int(y[1])])
-                b1.update()
                 if b1.check[0] and b1.check[1] != colours[(turn + 1) % 2]:
                     turn -= 1
                     print('\n' + 'You are not allowed to move into Check!')

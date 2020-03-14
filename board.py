@@ -78,11 +78,11 @@ class board:
                     return True
         return False
 
-    def update(self):
+    def update(self, colour):
         check = [False, None]
         for i in range(self.n):
             for j in range(self.n):
-                if self.status[i][j].name != '-':
+                if self.status[i][j].colour == colour and self.status[i][j].name != '-':
                     self.status[i][j].check_available()
                     if self.check_king(self.status[i][j].available):
                         check = [True, self.status[i][j].colour]
@@ -93,13 +93,13 @@ class board:
 
     # 'update' actualizes the available attribute of every piece
 
-    def print_status(self):
+    def print_status(self, status):
         print('\n')
         for h in range(self.n):
             a = [chr(64 + self.n - h)]
             for i in range(self.n):
-                if self.status[h][i].name != '-':
-                    a.append(''.join(list(self.status[h][i].name)[:2]) + '(' + self.status[h][i].colour + ')')
+                if status[h][i].name != '-':
+                    a.append(''.join(list(status[h][i].name)[:2]) + '(' + status[h][i].colour + ')')
                 else:
                     a.append('  -  ')
             print(' '.join(a))
