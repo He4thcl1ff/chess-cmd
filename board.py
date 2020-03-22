@@ -20,6 +20,7 @@ class board:
         self.status = set_list(n)
         self.create(n)
 
+    log = []
     check = [False, None]
 
     # check[0] indicates if one side checked the other
@@ -37,14 +38,12 @@ class board:
     # 'create' fills the board with empty tiles.
 
     def piece(self, c):
-        y, x = ord(c[0]), int(c[1])
-        return self.status[self.n - (y - 64)][x - 1]
+        return self.status[self.n - int(c[1])][ord(c[0]) - 65]
 
     # The 'piece' method returns the object corresponding to the coordinates given. Coordinates are given in list format.
 
     def set_piece(self, piece, c):
-        y, x = ord(c[0]), int(c[1])
-        self.status[self.n - (y - 64)][x - 1] = piece
+        self.status[self.n - int(c[1])][ord(c[0]) - 65] = piece
         piece.board = self
         piece.position = c
         return True
@@ -56,6 +55,7 @@ class board:
         if outc in self.piece(inc).available or outc == self.piece(inc).available:
             self.set_piece(self.piece(inc), outc)
             self.set_piece(empty(), inc)
+            self.log.append((inc, outc))
             self.update()
             return True
         else:
@@ -78,11 +78,11 @@ class board:
                     return True
         return False
 
-    def update(self, colour):
+    def update(self):
         check = [False, None]
         for i in range(self.n):
             for j in range(self.n):
-                if self.status[i][j].colour == colour and self.status[i][j].name != '-':
+                if self.status[i][j].name != '-':
                     self.status[i][j].check_available()
                     if self.check_king(self.status[i][j].available):
                         check = [True, self.status[i][j].colour]
@@ -96,7 +96,7 @@ class board:
     def print_status(self, status):
         print('\n')
         for h in range(self.n):
-            a = [chr(64 + self.n - h)]
+            a = [str(self.n - h)]
             for i in range(self.n):
                 if status[h][i].name != '-':
                     a.append(''.join(list(status[h][i].name)[:2]) + '(' + status[h][i].colour + ')')
@@ -104,6 +104,6 @@ class board:
                     a.append('  -  ')
             print(' '.join(a))
         a = [' ']
-        for j in range(1, self.n + 1):
-            a.append('  ' + str(j) + '  ')
+        for j in range(self.n):
+            a.append('  ' + chr(65 + j) + '  ')
         print(' '.join(a), '\n')
